@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.repository.findByIdOrNull
 import java.time.LocalDateTime
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -17,7 +18,7 @@ class UserRepositoryTest {
     lateinit var userRepository: UserJpaRepository
 
     @Test
-    fun `should save user`() {
+    fun saveUser() {
         val user = UserEntity(
             id = 1,
             username = "user",
@@ -31,6 +32,16 @@ class UserRepositoryTest {
         val foundUser = userRepository.findByIdOrNull(1)!!
 
         assertEquals(user.username, foundUser.username)
+    }
+
+    @Test
+    fun streamableTest() {
+        val toList = userRepository.findByRegisteredDateAfter(LocalDateTime.now())
+            .and(userRepository.findByLevel(1))
+            .stream().distinct()
+            .toList()
+
+        assertNotNull(toList)
     }
 
 }
