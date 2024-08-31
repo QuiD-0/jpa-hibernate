@@ -38,7 +38,16 @@ class UserRepositoryTest {
     fun streamableTest() {
         val toList = userRepository.findByRegisteredDateAfter(LocalDateTime.now())
             .and(userRepository.findByLevel(1))
-            .stream().distinct()
+            .distinct()
+            .toList()
+
+        assertNotNull(toList)
+    }
+
+    @Test
+    fun streamTest() {
+        val toList = userRepository.findByActive(true)
+            .filter(UserEntity::active)
             .toList()
 
         assertNotNull(toList)
