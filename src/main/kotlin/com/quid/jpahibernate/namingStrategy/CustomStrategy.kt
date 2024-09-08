@@ -21,7 +21,7 @@ class CustomStrategy{
         }
 
         private fun namingStrategy(logicalName: Identifier?): String {
-            return "TEST_${logicalName?.text?.uppercase(Locale.getDefault())}"
+            return logicalName?.text?.uppercase(Locale.getDefault())?: ""
         }
     }
 }

@@ -1,21 +1,22 @@
 package com.quid.jpahibernate.datajpa
 
+import jakarta.transaction.Transactional
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.assertDoesNotThrow
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.test.context.TestConstructor
 import java.time.LocalDateTime
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class UserRepositoryTest {
-
-    @Autowired
-    lateinit var userRepository: UserJpaRepository
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
+class UserRepositoryTest(
+    private val userRepository: UserJpaRepository
+) {
 
     @Test
     fun saveUser() {
@@ -45,6 +46,7 @@ class UserRepositoryTest {
     }
 
     @Test
+    @Transactional
     fun streamTest() {
         val toList = userRepository.findByActive(true)
             .filter(UserEntity::active)

@@ -1,18 +1,18 @@
 package com.quid.jpahibernate.generator
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.TestConstructor
 
 @SpringBootTest
-class UuidTypeTest{
-
-    @Autowired
-    lateinit var repository: UuidRepository
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
+class UuidTypeTest(
+    private val repository: UuidRepository
+) {
 
     @Test
-    fun test(){
+    fun test() {
         val uuidType = UuidType(null, "name")
         repository.save(uuidType)
 
