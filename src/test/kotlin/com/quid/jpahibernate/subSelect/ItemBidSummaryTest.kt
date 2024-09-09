@@ -1,8 +1,9 @@
 package com.quid.jpahibernate.subSelect
 
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.jdbc.core.simple.JdbcClient
 import org.springframework.test.context.TestConstructor
 
@@ -16,6 +17,12 @@ class ItemBidSummaryTest(
     @Test
     fun findSubSelect() {
         repository.findAll().also { println(it) }
+    }
+
+    @Test
+    fun findWithPageable() {
+        val page: Pageable = PageRequest.of(0, 1)
+        repository.findAll(page)
     }
 
     @Test
