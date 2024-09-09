@@ -28,7 +28,7 @@ class ItemBidSummaryTest(
     @Test
     fun setup() {
         val insertItems: String = """
-            insert into item (id, name, price) values (1, 'item1', 100), (2, 'item2', 200), (3, 'item3', 300);
+            insert into item (id, name, price, description) values (1, 'item1', 100, 'this is item1 description'), (2, 'item2', 200, 'this is item2 description'), (3, 'item3', 300, 'this is item3 description');
         """.trimIndent()
 
         val insertBids: String = """
