@@ -1,4 +1,4 @@
-package com.quid.jpahibernate.subSelect
+package com.quid.jpahibernate.annotations
 
 import org.springframework.data.jpa.repository.JpaRepository
 

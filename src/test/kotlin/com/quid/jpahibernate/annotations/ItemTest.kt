@@ -1,4 +1,4 @@
-package com.quid.jpahibernate.subSelect
+package com.quid.jpahibernate.annotations
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

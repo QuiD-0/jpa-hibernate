@@ -1,4 +1,4 @@
-package com.quid.jpahibernate.subSelect
+package com.quid.jpahibernate.annotations
 
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
