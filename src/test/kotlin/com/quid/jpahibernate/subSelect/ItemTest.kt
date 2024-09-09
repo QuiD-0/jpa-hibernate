@@ -14,4 +14,14 @@ class ItemTest(
     fun findWithFormula() {
         repository.findAll().also { println(it) }
     }
+
+    @Test
+    fun save() {
+        val item = Item(
+            name = "item1",
+            price = 100.0,
+            description = "this is item1 description"
+        )
+        repository.save(item)
+    }
 }
