@@ -1,15 +1,16 @@
 package com.quid.jpahibernate.transaction
 
 import com.quid.jpahibernate.mapping.Phone
-import jakarta.persistence.EntityManager
-import jakarta.persistence.Persistence
+import jakarta.persistence.EntityManagerFactory
+import org.springframework.stereotype.Component
 
-class SimpleTransaction {
-    private val entityManagerFactory = Persistence.createEntityManagerFactory("entity-manager")
-    private val entityManager: EntityManager = entityManagerFactory.createEntityManager()
+@Component
+class SimpleTransaction(
+    private val entityManagerFactory: EntityManagerFactory
+) {
 
     fun invoke() {
-        entityManager.use {
+        entityManagerFactory.createEntityManager().use {
             try {
                 it.transaction.begin()
                 val phone = Phone(
