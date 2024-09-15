@@ -5,10 +5,10 @@ import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class ServiceB {
+class NestedService {
 
     @Transactional(propagation = Propagation.NESTED)
-    fun doSomething(error: Boolean) {
+    fun nestedTransaction(error: Boolean) {
         if (error) {
             throw RuntimeException("Error")
         }

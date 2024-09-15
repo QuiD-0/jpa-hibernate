@@ -9,15 +9,15 @@ import org.springframework.test.context.TestConstructor.AutowireMode.ALL
 @SpringBootTest
 @TestConstructor(autowireMode = ALL)
 class ServiceATest(
-    private val serviceA: ServiceA
+    private val parentService: ParentService
 ) {
     @Test
     @DisplayName("Nested 트랜잭션은 부모 트랜잭션을 롤백 시키지 않음")
     fun nestedTest() {
         val testName = "test 1"
-        serviceA.doSomething(testName,true)
+        parentService.doSomething(testName,true)
 
-        serviceA.findByName(testName)
+        parentService.findByName(testName)
             ?.let { assert(it.status == "ERROR") }
     }
 }

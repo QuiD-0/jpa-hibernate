@@ -4,9 +4,9 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class ServiceA(
+class ParentService(
     private val apiHistory: ApiHistoryRepository,
-    private val serviceB: ServiceB
+    private val nestedService: NestedService
 ) {
 
     @Transactional
@@ -15,7 +15,7 @@ class ServiceA(
             .let { apiHistory.save(it) }
 
         try {
-            serviceB.doSomething(error)
+            nestedService.nestedTransaction(error)
             apiHistory.save(init.updateStatus("SUCCESS"))
         } catch (e: Exception) {
             apiHistory.save(init.updateStatus("ERROR"))
