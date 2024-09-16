@@ -15,7 +15,9 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
     open-in-view: false
   datasource:
-    url: jdbc:mysql://localhost:3306/jpa
-    username: user
-    password: user
+    url: jdbc:mysql://${host}:3306/jpa
+    username: root
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+host: "ip"
