@@ -1,4 +1,4 @@
-package com.quid.jpahibernate.transaction.isolation
+package com.quid.jpahibernate.transaction.propagation
 
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue

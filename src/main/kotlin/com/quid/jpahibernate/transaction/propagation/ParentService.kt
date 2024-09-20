@@ -1,4 +1,4 @@
-package com.quid.jpahibernate.transaction.isolation
+package com.quid.jpahibernate.transaction.propagation
 
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

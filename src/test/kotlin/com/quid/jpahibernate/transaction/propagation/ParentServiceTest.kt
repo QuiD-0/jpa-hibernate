@@ -1,4 +1,4 @@
-package com.quid.jpahibernate.transaction.isolation
+package com.quid.jpahibernate.transaction.propagation
 
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
