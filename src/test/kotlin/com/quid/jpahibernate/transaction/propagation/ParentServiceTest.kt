@@ -1,15 +1,19 @@
 package com.quid.jpahibernate.transaction.propagation
 
+import com.quid.jpahibernate.TestDataSourceConfig
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.context.annotation.Import
 import org.springframework.test.context.TestConstructor
 import org.springframework.test.context.TestConstructor.AutowireMode.ALL
 import org.springframework.transaction.IllegalTransactionStateException
+import java.util.UUID
 
 @SpringBootTest
+@Import(TestDataSourceConfig::class)
 @TestConstructor(autowireMode = ALL)
 class ParentServiceTest(
     private val parentService: ParentService
@@ -18,10 +22,9 @@ class ParentServiceTest(
     @DisplayName("Nested 트랜잭션은 부모 트랜잭션을 롤백 시키지 않음")
     fun nestedTest() {
         val testName = "test 1"
-        parentService.nested(testName,true)
+        parentService.nested(testName, true)
 
-        parentService.findByName(testName)
-            ?.let { assert(it.status == "ERROR") }
+        parentService.findByName(testName)?.let { assert(it.status == "ERROR") }
     }
 
     @Test
@@ -35,4 +38,18 @@ class ParentServiceTest(
     fun mandatoryExceptionTest() {
         assertThrows<IllegalTransactionStateException> { parentService.mandatory(false) }
     }
+
+    @Test
+    @DisplayName("RequireNew 트랜잭션은 부모 트랜잭션이 있어도 새로운 트랜잭션을 생성")
+    fun requireNewTest() {
+        val testName = UUID.randomUUID().toString()
+        try {
+            parentService.requireNew(testName)
+        } catch (e: Exception) {
+        }
+
+        parentService.findByName(testName)
+            ?.let { assert(it.status == "CHILD TRANSACTION") }
+    }
+
 }

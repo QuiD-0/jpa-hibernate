@@ -9,7 +9,8 @@ class ParentService(
     private val apiHistory: ApiHistoryRepository,
     private val nestedService: NestedService,
     private val mandatoryService: MandatoryService,
-    private val transaction: TransactionTemplate
+    private val requireNewService: RequireNewService,
+    private val transactionTemplate: TransactionTemplate
 ) {
 
     @Transactional
@@ -27,12 +28,19 @@ class ParentService(
 
     fun mandatory(transaction: Boolean) {
         if (transaction) {
-            this.transaction.execute {
+            transactionTemplate.execute {
                 mandatoryService.mandatory()
             }
         } else {
             mandatoryService.mandatory()
         }
+    }
+
+    @Transactional
+    fun requireNew(name: String) {
+        val history = ApiHistory(name, "PARENT TRANSACTION").let { apiHistory.save(it) }
+        requireNewService.requireNew(history)
+        throw RuntimeException("ERROR")
     }
 
     fun findByName(testName: String): ApiHistory? {
