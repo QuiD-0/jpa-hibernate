@@ -1,17 +1,20 @@
 package com.quid.jpahibernate.datajpa
 
 import jakarta.transaction.Transactional
+import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.TestConstructor
 import java.time.LocalDateTime
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 @SpringBootTest
+@ActiveProfiles("dev")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class UserRepositoryTest(
@@ -19,6 +22,7 @@ class UserRepositoryTest(
 ) {
 
     @Test
+    @Order(1)
     fun saveUser() {
         val user = UserEntity(
             id = 1,
@@ -46,6 +50,7 @@ class UserRepositoryTest(
     }
 
     @Test
+    @Order(2)
     @Transactional
     fun streamTest() {
         val toList = userRepository.findByActive(true)

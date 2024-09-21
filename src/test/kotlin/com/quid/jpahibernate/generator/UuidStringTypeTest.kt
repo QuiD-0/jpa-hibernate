@@ -2,10 +2,12 @@ package com.quid.jpahibernate.generator
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.TestConstructor
 import kotlin.test.assertNotNull
 
 @SpringBootTest
+@ActiveProfiles("dev")
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class UuidStringTypeTest(
     private val repository: UuidStringRepository

@@ -5,9 +5,11 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.jdbc.core.simple.JdbcClient
+import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.TestConstructor
 
 @SpringBootTest
+@ActiveProfiles("dev")
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class ItemBidSummaryTest(
     private val jdbcClient: JdbcClient,

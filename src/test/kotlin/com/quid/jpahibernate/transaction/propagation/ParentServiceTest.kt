@@ -21,7 +21,7 @@ class ParentServiceTest(
     @Test
     @DisplayName("Nested 트랜잭션은 부모 트랜잭션을 롤백 시키지 않음")
     fun nestedTest() {
-        val testName = "test 1"
+        val testName = UUID.randomUUID().toString()
         parentService.nested(testName, true)
 
         parentService.findByName(testName)?.let { assert(it.status == "ERROR") }
