@@ -1,19 +1,19 @@
 package com.quid.jpahibernate.transaction.propagation
 
-import com.quid.jpahibernate.TestDataSourceConfig
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
+import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.TestConstructor
 import org.springframework.test.context.TestConstructor.AutowireMode.ALL
 import org.springframework.transaction.IllegalTransactionStateException
 import java.util.UUID
 
 @SpringBootTest
-@Import(TestDataSourceConfig::class)
+@ActiveProfiles("dev")
 @TestConstructor(autowireMode = ALL)
 class ParentServiceTest(
     private val parentService: ParentService
