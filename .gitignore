@@ -40,3 +40,5 @@ out/
 .kotlin
 
 docker/mysql/*
+
+./src/main/resources/application-dev.yaml
