@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional
 @Entity
 class Orders(
     @JoinColumn(name = "order_id")
-    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    val items: LineItem
+    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    val items: MutableList<LineItem> = mutableListOf()
 ) {
     @Id
     @GeneratedValue(strategy = IDENTITY)

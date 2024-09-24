@@ -1,8 +1,10 @@
 package com.quid.jpahibernate.transaction.fetch
 
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestMethodOrder
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.TestConstructor
@@ -13,6 +15,7 @@ import kotlin.test.assertEquals
 @SpringBootTest
 @ActiveProfiles("dev")
 @TestConstructor(autowireMode = ALL)
+@TestMethodOrder(value = OrderAnnotation::class)
 class PostTest(
     private val lazyCollections: LazyCollections
 ) {
