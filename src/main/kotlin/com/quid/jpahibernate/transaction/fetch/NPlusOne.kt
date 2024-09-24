@@ -3,6 +3,7 @@ package com.quid.jpahibernate.transaction.fetch
 import jakarta.persistence.*
 import jakarta.persistence.GenerationType.IDENTITY
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -13,7 +14,8 @@ class Orders{
     @GeneratedValue(strategy = IDENTITY)
     val id: Long? = null
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], mappedBy = "order")
+    @JoinColumn(name = "order_id")
+    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     val items: MutableList<LineItem> = mutableListOf()
 
     fun addItem(lineItem: LineItem) {
@@ -31,12 +33,14 @@ class LineItem(
     @Id
     @GeneratedValue(strategy = IDENTITY)
     val id: Long? = null
-    @JoinColumn(name = "order_id")
     @ManyToOne(fetch = FetchType.LAZY)
     var order: Orders? = null
 }
 
-interface OrderRepository : JpaRepository<Orders, Long>
+interface OrderRepository : JpaRepository<Orders, Long> {
+    @Query("SELECT o FROM Orders o JOIN FETCH o.items WHERE o.id = :orderId")
+    fun findByIdWithJoin(orderId: Long): Orders?
+}
 
 @Service
 class NPlusOne(
@@ -47,4 +51,7 @@ class NPlusOne(
 
     @Transactional(readOnly = true)
     fun findOrder(orderId: Long): List<Orders> = orderRepository.findAll().toList()
+
+    @Transactional(readOnly = true)
+    fun findOrderWithJoinFetch(orderId: Long): Orders? = orderRepository.findByIdWithJoin(orderId)
 }

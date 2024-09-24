@@ -42,4 +42,13 @@ class NPlusOneTest(
         }
     }
 
+    @Test
+    @Order(3)
+    @Transactional
+    @DisplayName("Fetch Join으로 n+1 문제를 해결한다.")
+    fun `fetch join`() {
+        val orders = nPlusOne.findOrderWithJoinFetch(1L)
+        println(orders!!.items)
+    }
+
 }
