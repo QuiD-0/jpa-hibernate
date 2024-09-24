@@ -24,16 +24,10 @@ class NPlusOneTest(
     @Order(1)
     fun save() {
         val orders = Orders().apply {
-            items.add(LineItem("item1", 1, 100.0))
-            items.add(LineItem("item2", 2, 200.0))
-            items.add(LineItem("item3", 3, 300.0))
-            items.add(LineItem("item4", 4, 400.0))
-            items.add(LineItem("item5", 5, 500.0))
-            items.add(LineItem("item6", 6, 600.0))
-            items.add(LineItem("item7", 7, 700.0))
-            items.add(LineItem("item8", 8, 800.0))
-            items.add(LineItem("item9", 9, 900.0))
-            items.add(LineItem("item10", 10, 1000.0))
+            addItem(LineItem("item1", 1, 100.0))
+            addItem(LineItem("item2", 2, 200.0))
+            addItem(LineItem("item3", 3, 300.0))
+            addItem(LineItem("item4", 4, 400.0))
         }
         nPlusOne.saveOrder(orders)
     }

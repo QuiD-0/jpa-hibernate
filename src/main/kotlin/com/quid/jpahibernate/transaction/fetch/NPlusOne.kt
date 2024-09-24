@@ -8,14 +8,18 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Entity
-class Orders(
-    @JoinColumn(name = "order_id")
-    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    val items: MutableList<LineItem> = mutableListOf()
-) {
+class Orders{
     @Id
     @GeneratedValue(strategy = IDENTITY)
     val id: Long? = null
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], mappedBy = "order")
+    val items: MutableList<LineItem> = mutableListOf()
+
+    fun addItem(lineItem: LineItem) {
+        items.add(lineItem)
+        lineItem.order = this
+    }
 }
 
 @Entity
@@ -27,6 +31,9 @@ class LineItem(
     @Id
     @GeneratedValue(strategy = IDENTITY)
     val id: Long? = null
+    @JoinColumn(name = "order_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    var order: Orders? = null
 }
 
 interface OrderRepository : JpaRepository<Orders, Long>
